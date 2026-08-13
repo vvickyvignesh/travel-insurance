@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Result | Travel Shield</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/payment-result.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            ✈️ Travel<span>Shield</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+            <li><a href="plans.html" class="nav-link">Insurance Plans</a></li>
+            <li><a href="my-applications.html" class="nav-link">My Applications</a></li>
+            <li><a href="my-payments.html" class="nav-link">My Payments</a></li>
+            <li><a href="my-policies.html" class="nav-link">My Policies</a></li>
+            <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
+        </ul>
+    </nav>
+
+    <main class="container" style="max-width: 600px; padding-top: 4rem; padding-bottom: 4rem;">
+        <div id="alertContainer"></div>
+
+        <!-- Success Outcome -->
+        <div class="card" id="successCard" style="display: none; padding: 2.5rem; text-align: center; border-top: 6px solid var(--success);">
+            <div style="font-size: 4rem; color: var(--success); margin-bottom: 1rem;">✓</div>
+            <h1 style="color: var(--success); margin-bottom: 0.5rem;">Payment Successful</h1>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Thank you! Your simulated transaction completed successfully.</p>
+
+            <div style="text-align: left; background-color: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; font-size: 0.95rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="display: flex; justify-content: space-between;"><strong>Transaction ID:</strong> <span id="successTxnId" style="font-family: monospace; font-weight: bold;">Loading...</span></div>
+                <div style="display: flex; justify-content: space-between;"><strong>Application Number:</strong> <span id="successAppNum" style="font-weight: bold;">Loading...</span></div>
+                <div style="display: flex; justify-content: space-between;"><strong>Amount Paid:</strong> <span id="successAmount" style="font-weight: bold; color: var(--accent);">Loading...</span></div>
+                <div style="display: flex; justify-content: space-between;"><strong>Payment Method:</strong> <span id="successMethod" style="font-weight: bold;">Loading...</span></div>
+                <div style="display: flex; justify-content: space-between;"><strong>Status:</strong> <span class="badge" style="background-color: #d1fae5; color: #065f46; font-weight: bold;">SUCCESS</span></div>
+            </div>
+
+            <p style="font-size: 0.9rem; color: var(--text-muted); font-style: italic; margin-bottom: 2rem;">
+                Next: Your policy will be generated after payment verification.
+            </p>
+
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="my-applications.html" class="btn btn-secondary" style="flex: 1; border: 1px solid var(--border); color: var(--text-main); padding: 0.75rem 1.5rem; text-align: center;">View Applications</a>
+                <button id="btnDownloadReceipt" class="btn btn-primary" style="flex: 1; padding: 0.75rem 1.5rem; background-color: var(--primary);">Download Receipt</button>
+            </div>
+        </div>
+
+        <!-- Failure Outcome -->
+        <div class="card" id="failureCard" style="display: none; padding: 2.5rem; text-align: center; border-top: 6px solid var(--danger);">
+            <div style="font-size: 4rem; color: var(--danger); margin-bottom: 1rem;">✗</div>
+            <h1 style="color: var(--danger); margin-bottom: 0.5rem;">Payment Failed</h1>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Your simulated transaction could not be processed.</p>
+
+            <div style="text-align: left; background-color: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; font-size: 0.95rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="display: flex; justify-content: space-between;"><strong>Transaction ID:</strong> <span id="failureTxnId" style="font-family: monospace; font-weight: bold;">Loading...</span></div>
+                <div style="display: flex; justify-content: space-between;"><strong>Status:</strong> <span class="badge" style="background-color: #fee2e2; color: #991b1b; font-weight: bold;">FAILED</span></div>
+            </div>
+
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem;">
+                Your application remains pending. Please try again.
+            </p>
+
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="my-applications.html" class="btn btn-secondary" style="flex: 1; border: 1px solid var(--border); color: var(--text-main); padding: 0.75rem 1.5rem; text-align: center;">Back to Application</a>
+                <button id="btnRetryPayment" class="btn btn-primary" style="flex: 1; padding: 0.75rem 1.5rem; background-color: var(--primary);">Try Again</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Travel Shield Policy Issuance Platform. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Applications | Travel Shield</title>
+    <title>My Payments | Travel Shield</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/api.js" defer></script>
     <script src="js/auth.js" defer></script>
-    <script src="js/my-applications.js" defer></script>
+    <script src="js/my-payments.js" defer></script>
 </head>
 <body>
 
@@ -21,39 +21,36 @@
             <li><a href="my-applications.html" class="nav-link">My Applications</a></li>
             <li><a href="my-payments.html" class="nav-link">My Payments</a></li>
             <li><a href="my-policies.html" class="nav-link">My Policies</a></li>
-            <li id="adminLinkContainer" style="display: none;"><a href="admin.html" class="nav-link" style="color: var(--accent); font-weight: bold;">Admin Panel</a></li>
             <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
         </ul>
     </nav>
 
     <main class="container">
         <div style="margin-bottom: 2rem;">
-            <h1>My Applications</h1>
-            <p style="color: var(--text-muted);">View, update, or cancel your submitted travel insurance policy applications.</p>
+            <h1>My Payments History</h1>
+            <p style="color: var(--text-muted);">View all simulation receipts and transaction records associated with your applications.</p>
         </div>
 
         <div id="alertContainer"></div>
 
         <div class="card">
-            <h2>Applications List</h2>
+            <h2>Transactions Log</h2>
             <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
+                            <th>Transaction ID</th>
                             <th>Application No</th>
-                            <th>Insurance Plan</th>
-                            <th>Destination</th>
-                            <th>Departure Date</th>
-                            <th>Return Date</th>
-                            <th>Premium (₹)</th>
+                            <th>Amount (₹)</th>
+                            <th>Payment Method</th>
                             <th>Status</th>
-                            <th>Created Date</th>
+                            <th>Payment Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="applicationsTableBody">
+                    <tbody id="paymentsTableBody">
                         <tr>
-                            <td colspan="9" style="text-align: center; color: var(--text-muted);">Loading applications...</td>
+                            <td colspan="7" style="text-align: center; color: var(--text-muted);">Loading payment transactions...</td>
                         </tr>
                     </tbody>
                 </table>

@@ -75,4 +75,16 @@ public class PolicyApplicationController {
         body.put("data", response);
         return ResponseEntity.ok(body);
     }
+
+    @Autowired
+    private com.travelinsurance.service.PaymentService paymentService;
+
+    @GetMapping("/{id}/payment")
+    public ResponseEntity<Map<String, Object>> getApplicationPayment(@PathVariable Long id) {
+        com.travelinsurance.dto.PaymentResponse response = paymentService.getPaymentByApplication(id);
+        Map<String, Object> body = new HashMap<>();
+        body.put("success", true);
+        body.put("data", response);
+        return ResponseEntity.ok(body);
+    }
 }

@@ -108,7 +108,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     `;
                 }
             } else if (app.status === 'PAYMENT_COMPLETED') {
-                actionHtml = `<span style="color: var(--text-muted); font-size: 0.85rem; font-style: italic;">Awaiting Approval</span>`;
+                actionHtml = `
+                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                        <span style="color: var(--success); font-size: 0.85rem; font-weight: bold;">✓ Payment Completed</span>
+                        <a href="my-payments.html" class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem; border: 1px solid var(--border); text-align: center;">View Payment</a>
+                    </div>
+                `;
             } else if (app.status === 'APPROVED') {
                 actionHtml = `<a href="my-policies.html" class="btn btn-primary" style="padding: 0.3rem 0.6rem; font-size: 0.85rem; background-color: var(--success);">View Policy</a>`;
             } else if (app.status === 'REJECTED') {

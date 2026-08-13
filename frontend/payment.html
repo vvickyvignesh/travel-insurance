@@ -18,6 +18,7 @@
             <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
             <li><a href="plans.html" class="nav-link">Insurance Plans</a></li>
             <li><a href="my-applications.html" class="nav-link">My Applications</a></li>
+            <li><a href="my-payments.html" class="nav-link">My Payments</a></li>
             <li><a href="my-policies.html" class="nav-link">My Policies</a></li>
             <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
         </ul>
@@ -56,25 +57,25 @@
                 
                 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-bottom: 1.5rem;">
                     <label class="pay-method-tab" style="border: 1px solid var(--border); padding: 0.75rem 0.5rem; border-radius: 6px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
-                        <input type="radio" name="paymentMethod" value="CARD" checked style="margin: 0;">
+                        <input type="radio" name="paymentMethod" value="DEMO" checked style="margin: 0;">
+                        <span style="font-size: 0.85rem; font-weight: 600;">Demo Pay</span>
+                    </label>
+                    <label class="pay-method-tab" style="border: 1px solid var(--border); padding: 0.75rem 0.5rem; border-radius: 6px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; opacity: 0.6;">
+                        <input type="radio" name="paymentMethod" value="CARD" style="margin: 0;">
                         <span style="font-size: 0.85rem; font-weight: 600;">Credit/Debit</span>
                     </label>
-                    <label class="pay-method-tab" style="border: 1px solid var(--border); padding: 0.75rem 0.5rem; border-radius: 6px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+                    <label class="pay-method-tab" style="border: 1px solid var(--border); padding: 0.75rem 0.5rem; border-radius: 6px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; opacity: 0.6;">
                         <input type="radio" name="paymentMethod" value="UPI" style="margin: 0;">
                         <span style="font-size: 0.85rem; font-weight: 600;">UPI</span>
                     </label>
-                    <label class="pay-method-tab" style="border: 1px solid var(--border); padding: 0.75rem 0.5rem; border-radius: 6px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+                    <label class="pay-method-tab" style="border: 1px solid var(--border); padding: 0.75rem 0.5rem; border-radius: 6px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; opacity: 0.6;">
                         <input type="radio" name="paymentMethod" value="NET_BANKING" style="margin: 0;">
                         <span style="font-size: 0.85rem; font-weight: 600;">Net Banking</span>
-                    </label>
-                    <label class="pay-method-tab" style="border: 1px solid var(--border); padding: 0.75rem 0.5rem; border-radius: 6px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
-                        <input type="radio" name="paymentMethod" value="DEMO" style="margin: 0;">
-                        <span style="font-size: 0.85rem; font-weight: 600;">Demo Pay</span>
                     </label>
                 </div>
 
                 <!-- Card Form Fields -->
-                <div id="cardFields" class="pay-fields-group" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+                <div id="cardFields" class="pay-fields-group" style="display: none; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
                     <div class="form-group">
                         <label for="cardNumber">Card Number</label>
                         <input type="text" id="cardNumber" class="form-control" style="width: 100%;">
@@ -118,8 +119,24 @@
                 </div>
 
                 <!-- Demo Pay Fields -->
-                <div id="demoFields" class="pay-fields-group" style="display: none; margin-bottom: 2rem;">
-                    <p style="color: var(--text-muted); font-style: italic;">Demo Payment method. Clicking pay will instantly confirm payment for this policy application without external redirection.</p>
+                <div id="demoFields" class="pay-fields-group" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background-color: var(--primary-light); color: var(--primary); padding: 1rem; border-radius: 6px; border: 1px solid var(--border);">
+                        <strong style="display: block; margin-bottom: 0.25rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px;">Demo Gateway Sandbox</strong>
+                        <p style="margin: 0; font-size: 0.85rem; font-style: italic; line-height: 1.4;">DEMO PAYMENT — NO REAL MONEY WILL BE CHARGED.</p>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight: bold; margin-bottom: 0.5rem; display: block;">Simulation Result</label>
+                        <div style="display: flex; gap: 1.5rem; align-items: center; margin-top: 0.25rem;">
+                            <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-weight: 500; font-size: 0.95rem;">
+                                <input type="radio" name="demoResult" value="SUCCESS" checked style="width: auto; margin: 0;">
+                                Demo Success
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-weight: 500; color: var(--danger); font-size: 0.95rem;">
+                                <input type="radio" name="demoResult" value="FAILED" style="width: auto; margin: 0;">
+                                Demo Failure
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
                 <div style="display: flex; gap: 1rem; margin-top: 1rem;">
@@ -129,6 +146,18 @@
             </form>
         </div>
     </main>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div class="card" style="max-width: 450px; width: 90%; padding: 2rem; background: white; border-radius: 8px;">
+            <h3 style="color: var(--primary); margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1rem;">Confirm Transaction</h3>
+            <p id="confirmMsg" style="font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; color: var(--text-main);"></p>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <button id="cancelConfirmBtn" class="btn btn-secondary" style="padding: 0.5rem 1rem; border: 1px solid var(--border);">Cancel</button>
+                <button id="confirmPayBtn" class="btn btn-primary" style="padding: 0.5rem 1rem; background-color: var(--success);">Confirm Payment</button>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2026 Travel Shield Policy Issuance Platform. All rights reserved.</p>
@@ -149,6 +178,7 @@
             }
 
             let appDetails = null;
+            let premiumAmount = 0;
 
             // Load Application & Quote Info
             try {
@@ -162,12 +192,13 @@
                 }
 
                 appDetails = appRes;
+                premiumAmount = quoteRes.data.finalPremium;
                 
                 document.getElementById('summaryAppNum').textContent = appRes.applicationNumber;
                 document.getElementById('summaryPlanName').textContent = appRes.planName;
                 document.getElementById('summaryDest').textContent = appRes.destination;
                 document.getElementById('summaryDates').textContent = `${appRes.departureDate} to ${appRes.returnDate}`;
-                document.getElementById('summaryPremium').textContent = '₹' + quoteRes.data.finalPremium.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                document.getElementById('summaryPremium').textContent = '₹' + premiumAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             } catch (err) {
                 console.error(err);
                 alertContainer.innerHTML = '<div class="alert alert-danger">An error occurred while loading payment details.</div>';
@@ -192,7 +223,13 @@
             });
 
             // Form Submit Logic
-            document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+            const paymentForm = document.getElementById('paymentForm');
+            const confirmationModal = document.getElementById('confirmationModal');
+            const confirmMsg = document.getElementById('confirmMsg');
+            const cancelConfirmBtn = document.getElementById('cancelConfirmBtn');
+            const confirmPayBtn = document.getElementById('confirmPayBtn');
+
+            paymentForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 alertContainer.innerHTML = '';
                 
@@ -222,7 +259,22 @@
                     }
                 }
 
-                // Call Process Payment API
+                // Show confirmation modal
+                const premiumFormatted = '₹' + premiumAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                confirmMsg.innerHTML = `You are about to make a demo payment of <strong>${premiumFormatted}</strong>.<br><br><strong>Application:</strong><br>${appDetails.applicationNumber}<br><br>Continue?`;
+                confirmationModal.style.display = 'flex';
+            });
+
+            cancelConfirmBtn.addEventListener('click', () => {
+                confirmationModal.style.display = 'none';
+            });
+
+            confirmPayBtn.addEventListener('click', async () => {
+                confirmationModal.style.display = 'none';
+                
+                const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+                const demoResult = method === 'DEMO' ? document.querySelector('input[name="demoResult"]:checked').value : 'SUCCESS';
+
                 const payBtn = document.getElementById('payBtn');
                 payBtn.disabled = true;
                 payBtn.textContent = 'Processing Payment...';
@@ -230,22 +282,46 @@
                 try {
                     const result = await api.processPayment({
                         applicationId: parseInt(appId),
-                        paymentMethod: method
+                        paymentMethod: method,
+                        demoPaymentResult: demoResult
                     });
 
                     if (result.success !== false) {
-                        // Store message and redirect
-                        sessionStorage.setItem('payment_success_message', `Payment of ₹${result.data.amount.toLocaleString('en-IN', {minimumFractionDigits: 2})} successful! Transaction ID: ${result.data.transactionId}. Awaiting Admin Approval.`);
-                        window.location.href = 'my-applications.html';
+                        // Store details and redirect to payment-result
+                        sessionStorage.setItem('payment_result_data', JSON.stringify({
+                            success: true,
+                            transactionId: result.data.transactionId,
+                            applicationNumber: result.data.applicationNumber,
+                            amount: result.data.amount,
+                            paymentMethod: result.data.paymentMethod,
+                            status: result.data.status,
+                            applicationId: appId
+                        }));
+                        window.location.href = 'payment-result.html';
                     } else {
-                        alertContainer.innerHTML = `<div class="alert alert-danger">${result.message}</div>`;
-                        payBtn.disabled = false;
-                        payBtn.textContent = 'Pay Now';
+                        // If it fails with success=false, redirect to payment-result as failed
+                        sessionStorage.setItem('payment_result_data', JSON.stringify({
+                            success: false,
+                            transactionId: result.data ? result.data.transactionId : 'N/A',
+                            applicationNumber: appDetails.applicationNumber,
+                            amount: premiumAmount,
+                            status: 'FAILED',
+                            applicationId: appId
+                        }));
+                        window.location.href = 'payment-result.html';
                     }
                 } catch (err) {
-                    alertContainer.innerHTML = '<div class="alert alert-danger">Failed to process simulated payment. Connection error.</div>';
-                    payBtn.disabled = false;
-                    payBtn.textContent = 'Pay Now';
+                    console.error(err);
+                    // Simulated failure response
+                    sessionStorage.setItem('payment_result_data', JSON.stringify({
+                        success: false,
+                        transactionId: 'N/A',
+                        applicationNumber: appDetails.applicationNumber,
+                        amount: premiumAmount,
+                        status: 'FAILED',
+                        applicationId: appId
+                    }));
+                    window.location.href = 'payment-result.html';
                 }
             });
         });

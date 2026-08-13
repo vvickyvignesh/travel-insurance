@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Payments | Travel Shield Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/admin-payments.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            ✈️ Travel<span>Shield</span> 🛡️ Admin
+        </a>
+        <ul class="nav-links">
+            <li><a href="admin.html" class="nav-link">Manage Users</a></li>
+            <li><a href="admin-plans.html" class="nav-link">Manage Plans</a></li>
+            <li><a href="admin-applications.html" class="nav-link">Manage Applications</a></li>
+            <li><a href="admin-payments.html" class="nav-link">Manage Payments</a></li>
+            <li><a href="dashboard.html" class="nav-link">My Profile</a></li>
+            <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div style="margin-bottom: 2rem;">
+            <h1>Manage System Transactions</h1>
+            <p style="color: var(--text-muted);">Monitor all platform user payments, track statuses, and search simulation history.</p>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <!-- Filter / Search Toolbar -->
+        <div class="card" style="margin-bottom: 2rem; padding: 1.5rem; display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+            <div style="flex: 2; display: flex; gap: 0.5rem; align-items: center; min-width: 250px;">
+                <label for="searchPayment" style="font-weight: 600; color: var(--primary-light); white-space: nowrap;">Search:</label>
+                <input type="text" id="searchPayment" class="form-control" placeholder="Search by Transaction ID or Application Number...">
+            </div>
+            
+            <div style="flex: 1; display: flex; gap: 0.5rem; align-items: center; min-width: 200px;">
+                <label for="filterStatus" style="font-weight: 600; color: var(--primary-light); white-space: nowrap;">Status:</label>
+                <select id="filterStatus" class="form-control" style="padding: 0.5rem;">
+                    <option value="ALL">All Payments</option>
+                    <option value="SUCCESS">Success Only</option>
+                    <option value="FAILED">Failed Only</option>
+                    <option value="PENDING">Pending Only</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Payment Transactions Directory</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Application No</th>
+                            <th>Amount (₹)</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                            <th>Payment Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminPaymentsTableBody">
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--text-muted);">Loading transactions...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Travel Shield Policy Issuance Platform. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

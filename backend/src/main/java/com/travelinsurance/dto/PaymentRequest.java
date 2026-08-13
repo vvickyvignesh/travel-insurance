@@ -1,6 +1,7 @@
 package com.travelinsurance.dto;
 
 import com.travelinsurance.entity.PaymentMethod;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -12,4 +13,7 @@ public class PaymentRequest {
 
     @NotNull(message = "Payment method is required")
     private PaymentMethod paymentMethod;
+
+    @NotBlank(message = "Demo payment result is required")
+    private String demoPaymentResult;
 }
