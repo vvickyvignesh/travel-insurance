@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Applications | Travel Shield Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/admin-applications.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            ✈️ Travel<span>Shield</span> 🛡️ Admin
+        </a>
+        <ul class="nav-links">
+            <li><a href="admin.html" class="nav-link">Manage Users</a></li>
+            <li><a href="admin-plans.html" class="nav-link">Manage Plans</a></li>
+            <li><a href="admin-applications.html" class="nav-link">Manage Applications</a></li>
+            <li><a href="dashboard.html" class="nav-link">My Profile</a></li>
+            <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div style="margin-bottom: 2rem;">
+            <h1>Manage Policy Applications</h1>
+            <p style="color: var(--text-muted);">Process traveler policy requests, approve submissions, or reject unqualified plans.</p>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <!-- Details Card Modal (Hidden by default) -->
+        <div class="card" id="detailsModalCard" style="margin-bottom: 2rem; display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">
+                <h2 id="modalAppNumber">Application Details</h2>
+                <button class="btn btn-secondary" id="closeModalBtn" style="border: 1px solid var(--text-muted); color: var(--text-main); padding: 0.4rem 1rem;">Close</button>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 1.05rem;" id="modalDetailsGrid">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Applications Directory</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Application No</th>
+                            <th>Applicant</th>
+                            <th>Insurance Plan</th>
+                            <th>Destination</th>
+                            <th>Travel Dates</th>
+                            <th>Premium (₹)</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminAppTableBody">
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: var(--text-muted);">Loading applications directory...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Travel Shield Policy Issuance Platform. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

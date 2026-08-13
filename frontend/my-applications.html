@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications | Travel Shield</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/my-applications.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            ✈️ Travel<span>Shield</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+            <li><a href="plans.html" class="nav-link">Insurance Plans</a></li>
+            <li><a href="my-applications.html" class="nav-link">My Applications</a></li>
+            <li><a href="#" class="nav-link" onclick="alert('Policies will be available in Phase 5/6'); return false;">My Policies</a></li>
+            <li id="adminLinkContainer" style="display: none;"><a href="admin.html" class="nav-link" style="color: var(--accent); font-weight: bold;">Admin Panel</a></li>
+            <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div style="margin-bottom: 2rem;">
+            <h1>My Applications</h1>
+            <p style="color: var(--text-muted);">View, update, or cancel your submitted travel insurance policy applications.</p>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <div class="card">
+            <h2>Applications List</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Application No</th>
+                            <th>Insurance Plan</th>
+                            <th>Destination</th>
+                            <th>Departure Date</th>
+                            <th>Return Date</th>
+                            <th>Premium (₹)</th>
+                            <th>Status</th>
+                            <th>Created Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicationsTableBody">
+                        <tr>
+                            <td colspan="9" style="text-align: center; color: var(--text-muted);">Loading applications...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Travel Shield Policy Issuance Platform. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

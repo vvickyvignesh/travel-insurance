@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Application | Travel Shield</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/application-review.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            ✈️ Travel<span>Shield</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+            <li><a href="plans.html" class="nav-link">Insurance Plans</a></li>
+            <li><a href="my-applications.html" class="nav-link">My Applications</a></li>
+            <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
+        </ul>
+    </nav>
+
+    <main class="container" style="max-width: 800px;">
+        <div style="margin-bottom: 2rem;">
+            <h1>Review Policy Application</h1>
+            <p style="color: var(--text-muted);">Please review your information carefully before submitting.</p>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <div class="card" id="reviewCard" style="display: none;">
+            <!-- Application Header -->
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                <div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold;">Application Number</span>
+                    <h2 id="reviewAppNumber" style="color: var(--primary); margin-top: 0.25rem;">TIP-APP-XXXXXX</h2>
+                </div>
+                <div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block; text-align: right;">Status</span>
+                    <span id="reviewStatus" class="badge" style="margin-top: 0.25rem;">DRAFT</span>
+                </div>
+            </div>
+
+            <!-- Review Grid Details -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; font-size: 1.05rem;">
+                <div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Selected Plan</span>
+                    <strong id="reviewPlanName" style="color: var(--primary-light);">Premium Travel Plan</strong>
+                </div>
+                <div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Traveller Name</span>
+                    <strong id="reviewTravellerName" style="color: var(--primary-light);">John Doe</strong>
+                </div>
+
+                <div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Trip Destination</span>
+                    <strong id="reviewDestination" style="color: var(--primary-light);">Germany</strong>
+                </div>
+                <div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Travel Dates</span>
+                    <strong id="reviewDates" style="color: var(--primary-light);">2026-08-20 to 2026-08-30</strong>
+                </div>
+
+                <div style="grid-column: span 2; border-top: 1px solid var(--border); padding-top: 1.5rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; padding: 1rem; border-radius: 8px;">
+                    <div>
+                        <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold;">Base Premium (Estimated)</span>
+                        <h2 id="reviewPremium" style="font-size: 2rem; color: var(--primary); font-weight: 700; margin-top: 0.25rem;">₹3,500</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;" id="reviewActions">
+                <button class="btn btn-primary" id="submitAppBtn" style="flex: 2; padding: 1rem;">Submit Application</button>
+                <button class="btn btn-secondary" id="editTravelDetailsBtn" style="flex: 1; border: 1px solid var(--border); color: var(--text-main);">Edit Details</button>
+                <button class="btn btn-secondary" id="cancelAppBtn" style="flex: 1; border: 1px solid var(--danger); color: var(--danger); background-color: transparent;">Cancel Application</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Travel Shield Policy Issuance Platform. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

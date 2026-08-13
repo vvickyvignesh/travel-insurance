@@ -147,5 +147,102 @@ const api = {
         return this.request(`/admin/plans/${id}/deactivate`, {
             method: 'PATCH'
         });
+    },
+
+    // User Travel Details APIs
+    createTravelDetails(details) {
+        return this.request('/travel-details', {
+            method: 'POST',
+            body: JSON.stringify(details)
+        });
+    },
+
+    getTravelDetails() {
+        return this.request('/travel-details', {
+            method: 'GET'
+        });
+    },
+
+    getTravelDetail(id) {
+        return this.request(`/travel-details/${id}`, {
+            method: 'GET'
+        });
+    },
+
+    updateTravelDetails(id, details) {
+        return this.request(`/travel-details/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(details)
+        });
+    },
+
+    deleteTravelDetails(id) {
+        return this.request(`/travel-details/${id}`, {
+            method: 'DELETE'
+        });
+    },
+
+    // User Policy Applications APIs
+    createApplication(appData) {
+        return this.request('/applications', {
+            method: 'POST',
+            body: JSON.stringify(appData)
+        });
+    },
+
+    getApplications() {
+        return this.request('/applications', {
+            method: 'GET'
+        });
+    },
+
+    getApplication(id) {
+        return this.request(`/applications/${id}`, {
+            method: 'GET'
+        });
+    },
+
+    updateApplication(id, appData) {
+        return this.request(`/applications/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(appData)
+        });
+    },
+
+    submitApplication(id) {
+        return this.request(`/applications/${id}/submit`, {
+            method: 'POST'
+        });
+    },
+
+    cancelApplication(id) {
+        return this.request(`/applications/${id}/cancel`, {
+            method: 'POST'
+        });
+    },
+
+    // Admin Policy Applications APIs
+    getAdminApplications() {
+        return this.request('/admin/applications', {
+            method: 'GET'
+        });
+    },
+
+    getAdminApplication(id) {
+        return this.request(`/admin/applications/${id}`, {
+            method: 'GET'
+        });
+    },
+
+    approveAdminApplication(id) {
+        return this.request(`/admin/applications/${id}/approve`, {
+            method: 'PATCH'
+        });
+    },
+
+    rejectAdminApplication(id) {
+        return this.request(`/admin/applications/${id}/reject`, {
+            method: 'PATCH'
+        });
     }
 };
