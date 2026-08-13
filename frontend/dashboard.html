@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Travel Shield</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/dashboard.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            ✈️ Travel<span>Shield</span>
+        </a>
+        <ul class="nav-links">
+            <li id="adminLinkContainer" style="display: none;"><a href="admin.html" class="nav-link" style="color: var(--accent); font-weight: bold;">Admin Panel</a></li>
+            <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div style="margin-bottom: 2rem;">
+            <h1>Welcome, <span id="usernameDisplay">User</span>!</h1>
+            <p style="color: var(--text-muted);">Manage your account and view your travel insurance status.</p>
+        </div>
+
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+            <h2 style="border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem;">My Profile Information</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; font-size: 1.1rem;">
+                <div style="font-weight: 600; color: var(--primary-light);">Full Name:</div>
+                <div id="profileName">—</div>
+
+                <div style="font-weight: 600; color: var(--primary-light);">Email:</div>
+                <div id="profileEmail">—</div>
+
+                <div style="font-weight: 600; color: var(--primary-light);">Phone:</div>
+                <div id="profilePhone">—</div>
+
+                <div style="font-weight: 600; color: var(--primary-light);">Account Role:</div>
+                <div>
+                    <span id="profileRole" class="badge">—</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Travel Shield Policy Issuance Platform. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
