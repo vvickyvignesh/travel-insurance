@@ -1,6 +1,6 @@
 package com.travelinsurance.entity;
 
-public enum Role {
+public enum UserRole {
     USER,
     ADMIN
 }

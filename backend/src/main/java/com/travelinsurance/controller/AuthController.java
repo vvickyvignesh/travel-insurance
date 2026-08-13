@@ -4,7 +4,7 @@ import com.travelinsurance.dto.AuthResponse;
 import com.travelinsurance.dto.LoginRequest;
 import com.travelinsurance.dto.RegisterRequest;
 import com.travelinsurance.dto.UserDto;
-import com.travelinsurance.entity.Role;
+import com.travelinsurance.entity.UserRole;
 import com.travelinsurance.entity.User;
 import com.travelinsurance.exception.CustomException;
 import com.travelinsurance.repository.UserRepository;
@@ -45,7 +45,7 @@ public class AuthController {
         // Determine if this is the first user registered in the system.
         // If it is, default to ADMIN role so we can test ADMIN endpoints easily.
         // Otherwise, default to USER role.
-        Role role = userRepository.count() == 0 ? Role.ADMIN : Role.USER;
+        UserRole role = userRepository.count() == 0 ? UserRole.ADMIN : UserRole.USER;
 
         User user = User.builder()
                 .name(registerRequest.getName())

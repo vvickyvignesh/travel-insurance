@@ -44,7 +44,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private Role role;
+    private UserRole role;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -57,7 +57,7 @@ public class User {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
         if (role == null) {
-            role = Role.USER;
+            role = UserRole.USER;
         }
     }
 

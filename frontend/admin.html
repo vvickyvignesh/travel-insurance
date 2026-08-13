@@ -35,6 +35,13 @@
 
         <div id="alertContainer"></div>
 
+        <div class="card" style="margin-bottom: 2rem; padding: 1.5rem;">
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <label for="searchUser" style="font-weight: 600; color: var(--primary-light); white-space: nowrap;">Search User:</label>
+                <input type="text" id="searchUser" class="form-control" placeholder="Search by name, email, phone or role...">
+            </div>
+        </div>
+
         <div class="card">
             <h2>Registered Platform Users</h2>
             <div class="table-responsive">
@@ -46,11 +53,13 @@
                             <th>Email Address</th>
                             <th>Phone Number</th>
                             <th>Role</th>
+                            <th>Created Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="usersTableBody">
                         <tr>
-                            <td colspan="5" style="text-align: center; color: var(--text-muted);">Loading users list...</td>
+                            <td colspan="7" style="text-align: center; color: var(--text-muted);">Loading users list...</td>
                         </tr>
                     </tbody>
                 </table>

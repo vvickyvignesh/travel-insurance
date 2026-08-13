@@ -59,10 +59,29 @@ const api = {
         });
     },
 
+    updateProfile(userData) {
+        return this.request('/user/profile', {
+            method: 'PUT',
+            body: JSON.stringify(userData)
+        });
+    },
+
     // Admin Users Directory API
     getAdminUsers() {
         return this.request('/admin/users', {
             method: 'GET'
+        });
+    },
+
+    getUserDetails(id) {
+        return this.request(`/admin/users/${id}`, {
+            method: 'GET'
+        });
+    },
+
+    deleteUser(id) {
+        return this.request(`/admin/users/${id}`, {
+            method: 'DELETE'
         });
     }
 };

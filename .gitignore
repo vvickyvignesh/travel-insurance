@@ -35,3 +35,5 @@ target/
 Thumbs.db
 .env
 .env.local
+application-local.properties
+secrets

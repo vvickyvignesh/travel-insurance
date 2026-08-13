@@ -27,10 +27,12 @@
             <p style="color: var(--text-muted);">Manage your account and view your travel insurance status.</p>
         </div>
 
-        <div class="card" style="max-width: 600px; margin: 0 auto;">
+        <div id="alertContainer" style="max-width: 600px; margin: 0 auto 1.5rem auto;"></div>
+
+        <div class="card" id="profileViewCard" style="max-width: 600px; margin: 0 auto;">
             <h2 style="border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem;">My Profile Information</h2>
             
-            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; font-size: 1.1rem;">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; font-size: 1.1rem; margin-bottom: 1.5rem;">
                 <div style="font-weight: 600; color: var(--primary-light);">Full Name:</div>
                 <div id="profileName">—</div>
 
@@ -45,6 +47,28 @@
                     <span id="profileRole" class="badge">—</span>
                 </div>
             </div>
+
+            <button id="editProfileBtn" class="btn btn-primary btn-block">Edit Profile</button>
+        </div>
+
+        <div class="card" id="profileEditCard" style="max-width: 600px; margin: 0 auto; display: none;">
+            <h2 style="border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem;">Edit Profile</h2>
+            
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label for="editName">Full Name</label>
+                    <input type="text" id="editName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPhone">Phone Number</label>
+                    <input type="text" id="editPhone" class="form-control">
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Save Changes</button>
+                    <button type="button" id="cancelEditBtn" class="btn btn-secondary" style="flex: 1; border: 2px solid var(--border); color: var(--text-main);">Cancel</button>
+                </div>
+            </form>
         </div>
     </main>
 

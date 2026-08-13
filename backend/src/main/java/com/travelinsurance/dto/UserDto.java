@@ -1,6 +1,6 @@
 package com.travelinsurance.dto;
 
-import com.travelinsurance.entity.Role;
+import com.travelinsurance.entity.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +15,6 @@ public class UserDto {
     private String name;
     private String email;
     private String phone;
-    private Role role;
+    private UserRole role;
+    private String createdAt;
 }
