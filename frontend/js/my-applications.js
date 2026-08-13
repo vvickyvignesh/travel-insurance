@@ -59,17 +59,32 @@ document.addEventListener('DOMContentLoaded', async () => {
                 row.style.backgroundColor = '#f8fafc'; // greyed out
             }
 
+            // Premium amount formatting
+            let premiumDisplay = '<span style="color: var(--text-muted); font-style: italic;">Not Calculated</span>';
+            if (app.premiumAmount !== null) {
+                premiumDisplay = `<strong>₹${app.premiumAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>`;
+            }
+
             // Actions logic
             let actionHtml = '—';
             if (app.status === 'DRAFT') {
                 actionHtml = `<a href="application-review.html?id=${app.id}" class="btn btn-primary" style="padding: 0.3rem 0.6rem; font-size: 0.85rem;">Review</a>`;
             } else if (app.status === 'PENDING_PAYMENT') {
-                actionHtml = `
-                    <div style="display: flex; gap: 0.25rem;">
-                        <a href="payment.html" class="btn btn-primary" style="padding: 0.3rem 0.6rem; font-size: 0.85rem; background-color: var(--success);">Pay</a>
-                        <button class="btn btn-secondary btn-cancel-app" data-id="${app.id}" style="padding: 0.3rem 0.6rem; font-size: 0.85rem; border: 1px solid var(--danger); color: var(--danger); background-color: transparent;">Cancel</button>
-                    </div>
-                `;
+                if (app.premiumAmount === null) {
+                    actionHtml = `
+                        <div style="display: flex; gap: 0.25rem;">
+                            <a href="application-review.html?id=${app.id}" class="btn btn-primary" style="padding: 0.3rem 0.6rem; font-size: 0.85rem; background-color: var(--accent);">Calculate</a>
+                            <button class="btn btn-secondary btn-cancel-app" data-id="${app.id}" style="padding: 0.3rem 0.6rem; font-size: 0.85rem; border: 1px solid var(--danger); color: var(--danger); background-color: transparent;">Cancel</button>
+                        </div>
+                    `;
+                } else {
+                    actionHtml = `
+                        <div style="display: flex; gap: 0.25rem;">
+                            <a href="payment.html?applicationId=${app.id}" class="btn btn-primary" style="padding: 0.3rem 0.6rem; font-size: 0.85rem; background-color: var(--success);">Pay</a>
+                            <button class="btn btn-secondary btn-cancel-app" data-id="${app.id}" style="padding: 0.3rem 0.6rem; font-size: 0.85rem; border: 1px solid var(--danger); color: var(--danger); background-color: transparent;">Cancel</button>
+                        </div>
+                    `;
+                }
             }
 
             row.innerHTML = `
@@ -78,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <td>${app.destination}</td>
                 <td>${app.departureDate}</td>
                 <td>${app.returnDate}</td>
-                <td style="color: var(--text-muted); font-style: italic;">Not Calculated</td>
+                <td>${premiumDisplay}</td>
                 <td><span class="${badgeClass}" style="${app.status === 'PENDING_PAYMENT' ? 'background-color: #fef3c7; color: #d97706;' : ''}">${app.status}</span></td>
                 <td style="font-size: 0.9rem;">${createdDate}</td>
                 <td>${actionHtml}</td>

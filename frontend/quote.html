@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Insurance Quote | Travel Shield</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/quote.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            ✈️ Travel<span>Shield</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+            <li><a href="plans.html" class="nav-link">Insurance Plans</a></li>
+            <li><a href="my-applications.html" class="nav-link">My Applications</a></li>
+            <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
+        </ul>
+    </nav>
+
+    <main class="container" style="max-width: 700px;">
+        <div style="margin-bottom: 2rem;">
+            <h1>Travel Insurance Quote</h1>
+            <p style="color: var(--text-muted);">Review your policy premium details and multipliers calculated by the platform.</p>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <div class="card" id="quoteCard" style="display: none;">
+            
+            <div style="border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold;">Application Number</span>
+                    <h2 id="quoteAppNumber" style="color: var(--primary); margin-top: 0.25rem;">TIP-APP-XXXXXX</h2>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Plan Selected</span>
+                    <strong id="quotePlanName" style="color: var(--primary-light);">Premium Travel Plan</strong>
+                </div>
+            </div>
+
+            <!-- Parameters Grid -->
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem;">
+                <div>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Destination</span>
+                    <span id="quoteDestination" style="font-weight: 600;">Singapore</span>
+                </div>
+                <div>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Trip Duration</span>
+                    <span id="quoteDuration" style="font-weight: 600;">10 Days</span>
+                </div>
+                <div>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Trip Type</span>
+                    <span id="quoteTripType" style="font-weight: 600;">Round Trip</span>
+                </div>
+                <div>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Traveller Age</span>
+                    <span id="quoteAge" style="font-weight: 600;">35 Years</span>
+                </div>
+            </div>
+
+            <!-- Breakdown UI -->
+            <h3 style="margin-bottom: 1rem; color: var(--primary);">Premium Calculation Breakdown</h3>
+            <div style="border: 1px solid var(--border); border-radius: 8px; margin-bottom: 2rem; overflow: hidden;">
+                <table style="margin: 0; width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background-color: #f8fafc; border-bottom: 1px solid var(--border);">
+                            <th style="text-align: left; padding: 0.75rem 1rem;">Calculation Factor</th>
+                            <th style="text-align: right; padding: 0.75rem 1rem; width: 150px;">Multiplier / Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="text-align: left; padding: 0.75rem 1rem;">Base Plan Premium</td>
+                            <td style="text-align: right; padding: 0.75rem 1rem; font-weight: 600;" id="breakdownBase">₹0.00</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="text-align: left; padding: 0.75rem 1rem;">Trip Duration Multiplier</td>
+                            <td style="text-align: right; padding: 0.75rem 1rem;" id="breakdownDuration">1.00</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="text-align: left; padding: 0.75rem 1rem;">Traveller Age Multiplier</td>
+                            <td style="text-align: right; padding: 0.75rem 1rem;" id="breakdownAge">1.00</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="text-align: left; padding: 0.75rem 1rem;">Destination Multiplier</td>
+                            <td style="text-align: right; padding: 0.75rem 1rem;" id="breakdownDestination">1.00</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="text-align: left; padding: 0.75rem 1rem;">Trip Type Multiplier</td>
+                            <td style="text-align: right; padding: 0.75rem 1rem;" id="breakdownTripType">1.00</td>
+                        </tr>
+                        <tr style="background-color: var(--primary-light); color: #ffffff; font-size: 1.15rem; font-weight: bold;">
+                            <td style="text-align: left; padding: 1rem; color: #ffffff;">Final Premium (INR)</td>
+                            <td style="text-align: right; padding: 1rem; color: #ffffff;" id="breakdownFinal">₹0.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Proceed to Payment CTA -->
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-primary" id="proceedToPaymentBtn" style="flex: 2; padding: 1rem; font-size: 1.1rem; background-color: var(--success);">Proceed to Payment</button>
+                <a id="backToAppBtn" class="btn btn-secondary" style="flex: 1; border: 1px solid var(--border); color: var(--text-main); display: flex; align-items: center; justify-content: center; text-decoration: none;">Review Application</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Travel Shield Policy Issuance Platform. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -75,6 +75,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 actionHtml = `<button class="btn btn-secondary btn-view" data-id="${app.id}" style="padding: 0.25rem 0.5rem; font-size: 0.85rem; border: 1px solid var(--border); color: var(--text-main);">View Details</button>`;
             }
 
+            let premiumDisplay = '<span style="color: var(--text-muted); font-style: italic;">Not Calculated</span>';
+            if (app.premiumAmount !== null) {
+                premiumDisplay = `<strong>₹${app.premiumAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>`;
+            }
+
             row.innerHTML = `
                 <td><strong>${app.applicationNumber}</strong></td>
                 <td>
@@ -84,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <td>${app.planName}</td>
                 <td>${app.destination}</td>
                 <td>${app.departureDate} to ${app.returnDate}</td>
-                <td style="font-style: italic; color: var(--text-muted);">Not Calculated</td>
+                <td>${premiumDisplay}</td>
                 <td><span class="${badgeClass}" style="${badgeStyle}">${app.status}</span></td>
                 <td>${actionHtml}</td>
             `;
@@ -138,10 +143,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Fetch traveler specific detail info using TravelDetail API
         const traveler = await api.getTravelDetail(app.travelDetailsId);
 
+        let premiumDisplay = 'Not Calculated';
+        if (app.premiumAmount !== null) {
+            premiumDisplay = `₹${app.premiumAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+
         modalAppNumber.textContent = `Details: ${app.applicationNumber}`;
         modalDetailsGrid.innerHTML = `
             <div><strong>Plan Name:</strong> ${app.planName}</div>
-            <div><strong>Premium Estimated:</strong> ₹${app.premiumAmount.toLocaleString('en-IN')}</div>
+            <div><strong>Premium:</strong> ${premiumDisplay}</div>
             <div><strong>Applicant User:</strong> ${app.userName} (${app.userEmail})</div>
             <div><strong>Status State:</strong> <span class="badge">${app.status}</span></div>
             <div style="grid-column: span 2; border-top: 1px solid var(--border); margin-top: 0.5rem; padding-top: 0.5rem; font-weight: bold; color: var(--primary);">Traveller Parameters</div>

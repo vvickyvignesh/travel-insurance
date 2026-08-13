@@ -244,5 +244,18 @@ const api = {
         return this.request(`/admin/applications/${id}/reject`, {
             method: 'PATCH'
         });
+    },
+
+    // Premium Calculation APIs
+    calculatePremium(id) {
+        return this.request(`/applications/${id}/calculate-premium`, {
+            method: 'POST'
+        });
+    },
+
+    getQuote(id) {
+        return this.request(`/applications/${id}/quote`, {
+            method: 'GET'
+        });
     }
 };

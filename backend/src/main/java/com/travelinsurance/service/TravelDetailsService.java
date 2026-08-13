@@ -127,6 +127,14 @@ public class TravelDetailsService {
         details.setTripType(request.getTripType());
         details.setTravelPurpose(request.getTravelPurpose());
 
+        // Invalidate calculated premium quotes on associated applications
+        applicationRepository.findAll().stream()
+                .filter(app -> app.getTravelDetails().getId().equals(id))
+                .forEach(app -> {
+                    app.setPremiumAmount(null);
+                    applicationRepository.save(app);
+                });
+
         TravelDetails updated = travelDetailsRepository.save(details);
         return mapToResponse(updated);
     }
