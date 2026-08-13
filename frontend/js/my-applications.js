@@ -13,6 +13,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function loadApplications() {
         alertContainer.innerHTML = '';
+        
+        // Show success message from payment redirects
+        const payMsg = sessionStorage.getItem('payment_success_message');
+        if (payMsg) {
+            alertContainer.innerHTML = `<div class="alert alert-success">${payMsg}</div>`;
+            sessionStorage.removeItem('payment_success_message');
+        }
+
         const result = await api.getApplications();
 
         if (result.success === false) {
@@ -48,12 +56,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // Status Badge Formatting
             let badgeClass = 'badge';
+            let badgeStyle = '';
             if (app.status === 'DRAFT') {
                 badgeClass = 'badge badge-user';
                 row.style.backgroundColor = 'transparent';
             } else if (app.status === 'PENDING_PAYMENT') {
                 badgeClass = 'badge';
+                badgeStyle = 'background-color: #fef3c7; color: #d97706;';
                 row.style.backgroundColor = '#fffbeb'; // soft yellow highlight
+            } else if (app.status === 'PAYMENT_COMPLETED') {
+                badgeClass = 'badge';
+                badgeStyle = 'background-color: #dbeafe; color: #1e40af;';
+                row.style.backgroundColor = '#f0f9ff'; // soft blue highlight
+            } else if (app.status === 'APPROVED') {
+                badgeClass = 'badge';
+                badgeStyle = 'background-color: #d1fae5; color: #065f46;';
+                row.style.backgroundColor = '#f0fdf4'; // soft green highlight
+            } else if (app.status === 'REJECTED') {
+                badgeClass = 'badge badge-admin';
+                badgeStyle = 'background-color: #fee2e2; color: #991b1b;';
+                row.style.backgroundColor = '#fef2f2'; // soft red highlight
             } else if (app.status === 'CANCELLED') {
                 badgeClass = 'badge badge-admin';
                 row.style.backgroundColor = '#f8fafc'; // greyed out
@@ -85,6 +107,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </div>
                     `;
                 }
+            } else if (app.status === 'PAYMENT_COMPLETED') {
+                actionHtml = `<span style="color: var(--text-muted); font-size: 0.85rem; font-style: italic;">Awaiting Approval</span>`;
+            } else if (app.status === 'APPROVED') {
+                actionHtml = `<a href="my-policies.html" class="btn btn-primary" style="padding: 0.3rem 0.6rem; font-size: 0.85rem; background-color: var(--success);">View Policy</a>`;
+            } else if (app.status === 'REJECTED') {
+                actionHtml = `<span style="color: var(--danger); font-size: 0.85rem; font-weight: bold;">Rejected</span>`;
             }
 
             row.innerHTML = `
@@ -94,7 +122,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <td>${app.departureDate}</td>
                 <td>${app.returnDate}</td>
                 <td>${premiumDisplay}</td>
-                <td><span class="${badgeClass}" style="${app.status === 'PENDING_PAYMENT' ? 'background-color: #fef3c7; color: #d97706;' : ''}">${app.status}</span></td>
+                <td><span class="${badgeClass}" style="${badgeStyle}">${app.status}</span></td>
                 <td style="font-size: 0.9rem;">${createdDate}</td>
                 <td>${actionHtml}</td>
             `;

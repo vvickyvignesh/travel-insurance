@@ -52,6 +52,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             let badgeStyle = '';
             if (app.status === 'PENDING_PAYMENT') {
                 badgeStyle = 'background-color: #fef3c7; color: #d97706;';
+            } else if (app.status === 'PAYMENT_COMPLETED') {
+                badgeStyle = 'background-color: #dbeafe; color: #1e40af;';
             } else if (app.status === 'CANCELLED') {
                 badgeClass = 'badge badge-admin';
                 badgeStyle = 'background-color: #e2e8f0; color: #64748b;';
@@ -59,15 +61,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                 badgeStyle = 'background-color: #d1fae5; color: #059669;';
             } else if (app.status === 'REJECTED') {
                 badgeClass = 'badge badge-admin';
+                badgeStyle = 'background-color: #fee2e2; color: #991b1b;';
             }
 
             // Actions logic
             let actionHtml = '';
-            if (app.status === 'PENDING_PAYMENT') {
+            if (app.status === 'PAYMENT_COMPLETED') {
                 actionHtml = `
                     <div style="display: flex; gap: 0.25rem;">
                         <button class="btn btn-secondary btn-approve" data-id="${app.id}" style="padding: 0.25rem 0.5rem; font-size: 0.85rem; background-color: var(--success); color: #ffffff;">Approve</button>
                         <button class="btn btn-secondary btn-reject" data-id="${app.id}" style="padding: 0.25rem 0.5rem; font-size: 0.85rem; background-color: var(--danger); color: #ffffff;">Reject</button>
+                        <button class="btn btn-secondary btn-view" data-id="${app.id}" style="padding: 0.25rem 0.5rem; font-size: 0.85rem; border: 1px solid var(--border); color: var(--text-main);">View</button>
+                    </div>
+                `;
+            } else if (app.status === 'PENDING_PAYMENT') {
+                actionHtml = `
+                    <div style="display: flex; gap: 0.25rem;">
+                        <span style="font-size: 0.85rem; color: var(--text-muted); font-style: italic; align-self: center; margin-right: 0.5rem;">Awaiting Payment</span>
                         <button class="btn btn-secondary btn-view" data-id="${app.id}" style="padding: 0.25rem 0.5rem; font-size: 0.85rem; border: 1px solid var(--border); color: var(--text-main);">View</button>
                     </div>
                 `;

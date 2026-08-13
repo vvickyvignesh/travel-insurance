@@ -18,54 +18,238 @@
             <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
             <li><a href="plans.html" class="nav-link">Insurance Plans</a></li>
             <li><a href="my-applications.html" class="nav-link">My Applications</a></li>
+            <li><a href="my-policies.html" class="nav-link">My Policies</a></li>
             <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
         </ul>
     </nav>
 
-    <main class="container" style="max-width: 600px; text-align: center; padding-top: 4rem;">
-        <div class="card" style="padding: 3rem 2rem;">
-            <div style="font-size: 4rem; margin-bottom: 1.5rem;">💳</div>
-            <h1 style="color: var(--primary); margin-bottom: 1rem;">Simulated Payment Checkout</h1>
+    <main class="container" style="max-width: 650px; padding-top: 3rem; padding-bottom: 3rem;">
+        <div class="card" style="padding: 2.5rem;">
+            <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">💳</div>
+            <h1 style="color: var(--primary); text-align: center; margin-bottom: 0.5rem;">Secure Payment Portal</h1>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">Please review details and select a payment method below.</p>
             
-            <div style="margin: 1.5rem 0; padding: 1rem; background-color: #f1f5f9; border-radius: 8px;">
-                <h2 style="color: var(--accent); margin-bottom: 0.5rem;" id="paymentAmount">Premium: Loading...</h2>
-                <p style="font-weight: 600; margin-bottom: 0;" id="paymentAppNumber">Application: Loading...</p>
+            <div id="alertContainer"></div>
+
+            <!-- Policy Summary Card -->
+            <div style="margin-bottom: 2rem; padding: 1.5rem; background-color: #f8fafc; border: 1px solid var(--border); border-radius: 8px;">
+                <h3 style="color: var(--primary); margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Checkout Summary</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.95rem;">
+                    <div><strong>Application Number:</strong></div>
+                    <div id="summaryAppNum" style="text-align: right; font-weight: bold;">Loading...</div>
+                    <div><strong>Insured Plan:</strong></div>
+                    <div id="summaryPlanName" style="text-align: right;">Loading...</div>
+                    <div><strong>Destination Country:</strong></div>
+                    <div id="summaryDest" style="text-align: right;">Loading...</div>
+                    <div><strong>Trip Duration:</strong></div>
+                    <div id="summaryDates" style="text-align: right;">Loading...</div>
+                    <div style="grid-column: span 2; border-top: 1px solid var(--border); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 1.1rem; font-weight: bold; color: var(--text-main);">Amount Payable:</span>
+                        <span id="summaryPremium" style="font-size: 1.3rem; font-weight: 800; color: var(--accent);">Loading...</span>
+                    </div>
+                </div>
             </div>
 
-            <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 2rem;">
-                Payment Gateway integration, transaction verification, and official policy document release will be implemented in Phase 6.
-            </p>
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <a href="my-applications.html" class="btn btn-primary">Go to My Applications</a>
-                <a href="dashboard.html" class="btn btn-secondary" style="border: 1px solid var(--border); color: var(--text-main);">Return to Dashboard</a>
-            </div>
+            <!-- Payment Methods Form -->
+            <form id="paymentForm">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Choose Payment Method</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-bottom: 1.5rem;">
+                    <label class="pay-method-tab" style="border: 1px solid var(--border); padding: 0.75rem 0.5rem; border-radius: 6px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+                        <input type="radio" name="paymentMethod" value="CARD" checked style="margin: 0;">
+                        <span style="font-size: 0.85rem; font-weight: 600;">Credit/Debit</span>
+                    </label>
+                    <label class="pay-method-tab" style="border: 1px solid var(--border); padding: 0.75rem 0.5rem; border-radius: 6px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+                        <input type="radio" name="paymentMethod" value="UPI" style="margin: 0;">
+                        <span style="font-size: 0.85rem; font-weight: 600;">UPI</span>
+                    </label>
+                    <label class="pay-method-tab" style="border: 1px solid var(--border); padding: 0.75rem 0.5rem; border-radius: 6px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+                        <input type="radio" name="paymentMethod" value="NET_BANKING" style="margin: 0;">
+                        <span style="font-size: 0.85rem; font-weight: 600;">Net Banking</span>
+                    </label>
+                    <label class="pay-method-tab" style="border: 1px solid var(--border); padding: 0.75rem 0.5rem; border-radius: 6px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+                        <input type="radio" name="paymentMethod" value="DEMO" style="margin: 0;">
+                        <span style="font-size: 0.85rem; font-weight: 600;">Demo Pay</span>
+                    </label>
+                </div>
 
-            <script>
-                document.addEventListener('DOMContentLoaded', async () => {
-                    if (typeof auth !== 'undefined' && !auth.getToken()) return;
-                    const params = new URLSearchParams(window.location.search);
-                    const appId = params.get('applicationId');
-                    if (!appId) {
-                        document.getElementById('paymentAmount').textContent = 'Error: missing ID';
-                        document.getElementById('paymentAppNumber').textContent = '';
-                        return;
-                    }
-                    const result = await api.getQuote(appId);
-                    if (result && result.success !== false) {
-                        document.getElementById('paymentAmount').textContent = 'Premium: ₹' + result.data.finalPremium.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                        document.getElementById('paymentAppNumber').textContent = 'Application: ' + result.data.applicationNumber;
-                    } else {
-                        document.getElementById('paymentAmount').textContent = 'Quote not calculated';
-                        document.getElementById('paymentAppNumber').textContent = 'Submit and calculate premium first';
-                    }
-                });
-            </script>
+                <!-- Card Form Fields -->
+                <div id="cardFields" class="pay-fields-group" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" class="form-control" style="width: 100%;">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="cardExpiry">Expiry Date</label>
+                            <input type="text" id="cardExpiry" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="cardCvv">CVV</label>
+                            <input type="password" id="cardCvv" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardName">Cardholder Name</label>
+                        <input type="text" id="cardName" class="form-control" style="width: 100%;">
+                    </div>
+                </div>
+
+                <!-- UPI Fields -->
+                <div id="upiFields" class="pay-fields-group" style="display: none; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+                    <div class="form-group">
+                        <label for="upiId">UPI ID / VPA</label>
+                        <input type="text" id="upiId" class="form-control" style="width: 100%;">
+                    </div>
+                </div>
+
+                <!-- Net Banking Fields -->
+                <div id="netBankingFields" class="pay-fields-group" style="display: none; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+                    <div class="form-group">
+                        <label for="bankSelect">Select Bank</label>
+                        <select id="bankSelect" class="form-control" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px;">
+                            <option value="">-- Choose Your Bank --</option>
+                            <option value="HDFC">HDFC Bank</option>
+                            <option value="ICICI">ICICI Bank</option>
+                            <option value="SBI">State Bank of India</option>
+                            <option value="AXIS">Axis Bank</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Demo Pay Fields -->
+                <div id="demoFields" class="pay-fields-group" style="display: none; margin-bottom: 2rem;">
+                    <p style="color: var(--text-muted); font-style: italic;">Demo Payment method. Clicking pay will instantly confirm payment for this policy application without external redirection.</p>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <button type="submit" id="payBtn" class="btn btn-primary" style="flex: 2; padding: 0.8rem; font-weight: bold; background-color: var(--success);">Pay Now</button>
+                    <a href="my-applications.html" class="btn btn-secondary" style="flex: 1; text-align: center; border: 1px solid var(--border); color: var(--text-main); padding: 0.8rem;">Cancel</a>
+                </div>
+            </form>
         </div>
     </main>
 
     <footer>
         <p>&copy; 2026 Travel Shield Policy Issuance Platform. All rights reserved.</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (typeof auth !== 'undefined' && !auth.getToken()) return;
+            
+            const params = new URLSearchParams(window.location.search);
+            const appId = params.get('applicationId');
+            const alertContainer = document.getElementById('alertContainer');
+            
+            if (!appId) {
+                alertContainer.innerHTML = '<div class="alert alert-danger">Error: Missing Application ID query parameter.</div>';
+                document.getElementById('payBtn').disabled = true;
+                return;
+            }
+
+            let appDetails = null;
+
+            // Load Application & Quote Info
+            try {
+                const quoteRes = await api.getQuote(appId);
+                const appRes = await api.getApplication(appId);
+
+                if (appRes.success === false || quoteRes.success === false) {
+                    alertContainer.innerHTML = `<div class="alert alert-danger">Failed to fetch application details. Ensure application state is PENDING_PAYMENT.</div>`;
+                    document.getElementById('payBtn').disabled = true;
+                    return;
+                }
+
+                appDetails = appRes;
+                
+                document.getElementById('summaryAppNum').textContent = appRes.applicationNumber;
+                document.getElementById('summaryPlanName').textContent = appRes.planName;
+                document.getElementById('summaryDest').textContent = appRes.destination;
+                document.getElementById('summaryDates').textContent = `${appRes.departureDate} to ${appRes.returnDate}`;
+                document.getElementById('summaryPremium').textContent = '₹' + quoteRes.data.finalPremium.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            } catch (err) {
+                console.error(err);
+                alertContainer.innerHTML = '<div class="alert alert-danger">An error occurred while loading payment details.</div>';
+            }
+
+            // Radio tab switching logic
+            const radioButtons = document.querySelectorAll('input[name="paymentMethod"]');
+            const groups = {
+                CARD: document.getElementById('cardFields'),
+                UPI: document.getElementById('upiFields'),
+                NET_BANKING: document.getElementById('netBankingFields'),
+                DEMO: document.getElementById('demoFields')
+            };
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const method = e.target.value;
+                    Object.keys(groups).forEach(key => {
+                        groups[key].style.display = key === method ? 'flex' : 'none';
+                    });
+                });
+            });
+
+            // Form Submit Logic
+            document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                alertContainer.innerHTML = '';
+                
+                const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+                // Simple validation for non-demo methods
+                if (method === 'CARD') {
+                    const cardNum = document.getElementById('cardNumber').value.trim();
+                    const exp = document.getElementById('cardExpiry').value.trim();
+                    const cvv = document.getElementById('cardCvv').value.trim();
+                    const name = document.getElementById('cardName').value.trim();
+                    if (!cardNum || !exp || !cvv || !name) {
+                        alertContainer.innerHTML = '<div class="alert alert-danger">Please fill in all credit card details.</div>';
+                        return;
+                    }
+                } else if (method === 'UPI') {
+                    const upi = document.getElementById('upiId').value.trim();
+                    if (!upi) {
+                        alertContainer.innerHTML = '<div class="alert alert-danger">Please enter a valid UPI ID.</div>';
+                        return;
+                    }
+                } else if (method === 'NET_BANKING') {
+                    const bank = document.getElementById('bankSelect').value;
+                    if (!bank) {
+                        alertContainer.innerHTML = '<div class="alert alert-danger">Please select your bank.</div>';
+                        return;
+                    }
+                }
+
+                // Call Process Payment API
+                const payBtn = document.getElementById('payBtn');
+                payBtn.disabled = true;
+                payBtn.textContent = 'Processing Payment...';
+
+                try {
+                    const result = await api.processPayment({
+                        applicationId: parseInt(appId),
+                        paymentMethod: method
+                    });
+
+                    if (result.success !== false) {
+                        // Store message and redirect
+                        sessionStorage.setItem('payment_success_message', `Payment of ₹${result.data.amount.toLocaleString('en-IN', {minimumFractionDigits: 2})} successful! Transaction ID: ${result.data.transactionId}. Awaiting Admin Approval.`);
+                        window.location.href = 'my-applications.html';
+                    } else {
+                        alertContainer.innerHTML = `<div class="alert alert-danger">${result.message}</div>`;
+                        payBtn.disabled = false;
+                        payBtn.textContent = 'Pay Now';
+                    }
+                } catch (err) {
+                    alertContainer.innerHTML = '<div class="alert alert-danger">Failed to process simulated payment. Connection error.</div>';
+                    payBtn.disabled = false;
+                    payBtn.textContent = 'Pay Now';
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

@@ -257,5 +257,62 @@ const api = {
         return this.request(`/applications/${id}/quote`, {
             method: 'GET'
         });
+    },
+
+    // Payment APIs
+    processPayment(paymentData) {
+        return this.request('/payments', {
+            method: 'POST',
+            body: JSON.stringify(paymentData)
+        });
+    },
+
+    // Policies APIs
+    getPolicies() {
+        return this.request('/policies', {
+            method: 'GET'
+        });
+    },
+
+    getPolicy(id) {
+        return this.request(`/policies/${id}`, {
+            method: 'GET'
+        });
+    },
+
+    async downloadPolicyDocument(id, filename) {
+        const token = localStorage.getItem('token');
+        try {
+            const response = await fetch(`${API_BASE_URL}/policies/${id}/download`, {
+                method: 'GET',
+                headers: {
+                    ...(token && { 'Authorization': `Bearer ${token}` })
+                }
+            });
+
+            if (!response.ok) {
+                return {
+                    success: false,
+                    message: 'Failed to download policy document'
+                };
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename || `Policy_Certificate_${id}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            return { success: true };
+        } catch (error) {
+            console.error('Download error:', error);
+            return {
+                success: false,
+                message: 'Error downloading document: ' + error.message
+            };
+        }
     }
 };

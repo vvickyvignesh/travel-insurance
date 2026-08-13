@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Applications | Travel Shield</title>
+    <title>My Policies | Travel Shield</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/api.js" defer></script>
     <script src="js/auth.js" defer></script>
-    <script src="js/my-applications.js" defer></script>
+    <script src="js/my-policies.js" defer></script>
 </head>
 <body>
 
@@ -27,32 +27,32 @@
 
     <main class="container">
         <div style="margin-bottom: 2rem;">
-            <h1>My Applications</h1>
-            <p style="color: var(--text-muted);">View, update, or cancel your submitted travel insurance policy applications.</p>
+            <h1>My Active Policies</h1>
+            <p style="color: var(--text-muted);">View details and download official insurance certificates for your approved policies.</p>
         </div>
 
         <div id="alertContainer"></div>
 
         <div class="card">
-            <h2>Applications List</h2>
+            <h2>Issued Policies</h2>
             <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
+                            <th>Policy Number</th>
                             <th>Application No</th>
                             <th>Insurance Plan</th>
                             <th>Destination</th>
-                            <th>Departure Date</th>
-                            <th>Return Date</th>
-                            <th>Premium (₹)</th>
+                            <th>Coverage Amount (₹)</th>
+                            <th>Premium Paid (₹)</th>
+                            <th>Travel Dates</th>
                             <th>Status</th>
-                            <th>Created Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="applicationsTableBody">
+                    <tbody id="policiesTableBody">
                         <tr>
-                            <td colspan="9" style="text-align: center; color: var(--text-muted);">Loading applications...</td>
+                            <td colspan="9" style="text-align: center; color: var(--text-muted);">Loading policies...</td>
                         </tr>
                     </tbody>
                 </table>

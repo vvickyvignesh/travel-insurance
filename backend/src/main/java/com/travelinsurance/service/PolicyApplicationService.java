@@ -30,6 +30,12 @@ public class PolicyApplicationService {
     @Autowired
     private TravelDetailsRepository travelDetailsRepository;
 
+    @Autowired
+    private PolicyRepository policyRepository;
+
+    @Autowired
+    private PolicyDocumentRepository documentRepository;
+
     private User getAuthenticatedUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(email)
@@ -208,8 +214,41 @@ public class PolicyApplicationService {
         PolicyApplication app = applicationRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Policy application not found", HttpStatus.NOT_FOUND));
 
+        if (app.getStatus() != ApplicationStatus.PAYMENT_COMPLETED) {
+            throw new CustomException("Application must have completed payment before approval", HttpStatus.BAD_REQUEST);
+        }
+
         app.setStatus(ApplicationStatus.APPROVED);
-        return mapToResponse(applicationRepository.save(app));
+        PolicyApplication savedApp = applicationRepository.save(app);
+
+        // Generate Policy Number
+        String policyNumber = String.format("POL-2026-%06d", savedApp.getId());
+        Policy policy = Policy.builder()
+                .policyNumber(policyNumber)
+                .user(savedApp.getUser())
+                .application(savedApp)
+                .plan(savedApp.getPlan())
+                .coverageAmount(savedApp.getPlan().getCoverageAmount())
+                .premiumAmount(savedApp.getPremiumAmount())
+                .destination(savedApp.getTravelDetails().getDestination())
+                .startDate(savedApp.getTravelDetails().getDepartureDate())
+                .endDate(savedApp.getTravelDetails().getReturnDate())
+                .status(PolicyStatus.ACTIVE)
+                .build();
+
+        Policy savedPolicy = policyRepository.save(policy);
+
+        // Generate Policy Document
+        PolicyDocument document = PolicyDocument.builder()
+                .policy(savedPolicy)
+                .documentName("Policy_Certificate_" + policyNumber + ".txt")
+                .documentPath("/api/policies/" + savedPolicy.getId() + "/download")
+                .documentType("TXT")
+                .build();
+
+        documentRepository.save(document);
+
+        return mapToResponse(savedApp);
     }
 
     @Transactional
