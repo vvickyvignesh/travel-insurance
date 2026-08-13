@@ -38,14 +38,20 @@ public class InsurancePlan {
     @Column(name = "coverage_amount", nullable = false, precision = 12, scale = 2)
     private BigDecimal coverageAmount;
 
-    @Column(name = "medical_coverage")
-    private Boolean medicalCoverage = true;
+    @NotNull
+    @DecimalMin(value = "0.0")
+    @Column(name = "medical_coverage", nullable = false, precision = 12, scale = 2)
+    private BigDecimal medicalCoverage;
 
-    @Column(name = "baggage_coverage")
-    private Boolean baggageCoverage = true;
+    @NotNull
+    @DecimalMin(value = "0.0")
+    @Column(name = "baggage_coverage", nullable = false, precision = 12, scale = 2)
+    private BigDecimal baggageCoverage;
 
-    @Column(name = "trip_cancellation")
-    private Boolean tripCancellation = true;
+    @NotNull
+    @DecimalMin(value = "0.0")
+    @Column(name = "trip_cancellation", nullable = false, precision = 12, scale = 2)
+    private BigDecimal tripCancellation;
 
     @Column(name = "emergency_assistance")
     private Boolean emergencyAssistance = true;
@@ -68,9 +74,6 @@ public class InsurancePlan {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
-        if (medicalCoverage == null) medicalCoverage = true;
-        if (baggageCoverage == null) baggageCoverage = true;
-        if (tripCancellation == null) tripCancellation = true;
         if (emergencyAssistance == null) emergencyAssistance = true;
         if (active == null) active = true;
     }

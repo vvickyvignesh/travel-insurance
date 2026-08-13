@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS insurance_plans (
     name VARCHAR(100) NOT NULL,
     description TEXT,
     coverage_amount NUMERIC(12, 2) NOT NULL CHECK (coverage_amount >= 0),
-    medical_coverage BOOLEAN DEFAULT TRUE,
-    baggage_coverage BOOLEAN DEFAULT TRUE,
-    trip_cancellation BOOLEAN DEFAULT TRUE,
+    medical_coverage NUMERIC(12, 2) NOT NULL CHECK (medical_coverage >= 0),
+    baggage_coverage NUMERIC(12, 2) NOT NULL CHECK (baggage_coverage >= 0),
+    trip_cancellation NUMERIC(12, 2) NOT NULL CHECK (trip_cancellation >= 0),
     emergency_assistance BOOLEAN DEFAULT TRUE,
     base_premium NUMERIC(10, 2) NOT NULL CHECK (base_premium >= 0),
     active BOOLEAN DEFAULT TRUE,
@@ -110,8 +110,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_payments_tx ON payments(transaction_id);
 -- Sample Data Seeding for Insurance Plans
 INSERT INTO insurance_plans (name, description, coverage_amount, medical_coverage, baggage_coverage, trip_cancellation, emergency_assistance, base_premium, active)
 VALUES 
-('Basic Travel Plan', 'Essential medical and luggage coverage for budget travelers.', 50000.00, TRUE, TRUE, FALSE, TRUE, 15.00, TRUE),
-('Premium Travel Plan', 'Enhanced coverage with trip cancellation protection and high medical limits.', 150000.00, TRUE, TRUE, TRUE, TRUE, 35.00, TRUE),
-('Gold Travel Plan', 'Maximum comprehensive coverage for global travel including adventure sports protection.', 500000.00, TRUE, TRUE, TRUE, TRUE, 75.00, TRUE),
-('Family Travel Plan', 'All-in-one comprehensive coverage specifically tailored for families traveling together.', 250000.00, TRUE, TRUE, TRUE, TRUE, 60.00, TRUE)
+('Basic Travel Plan', 'Essential medical and luggage coverage for budget travelers.', 500000.00, 350000.00, 100000.00, 50000.00, TRUE, 1500.00, TRUE),
+('Premium Travel Plan', 'Enhanced coverage with trip cancellation protection and high medical limits.', 1000000.00, 750000.00, 150000.00, 100000.00, TRUE, 3500.00, TRUE),
+('Gold Travel Plan', 'Maximum comprehensive coverage for global travel including adventure sports protection.', 2000000.00, 1500000.00, 300000.00, 200000.00, TRUE, 5500.00, TRUE),
+('Family Travel Plan', 'All-in-one comprehensive coverage specifically tailored for families traveling together.', 2500000.00, 1800000.00, 400000.00, 300000.00, TRUE, 7000.00, TRUE)
 ON CONFLICT DO NOTHING;

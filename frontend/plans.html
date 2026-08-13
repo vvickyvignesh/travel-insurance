@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Plans | Travel Shield</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/plans.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            ✈️ Travel<span>Shield</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+            <li><a href="plans.html" class="nav-link">Insurance Plans</a></li>
+            <li><a href="#" class="nav-link" onclick="alert('Applications will be available in Phase 4/5'); return false;">My Applications</a></li>
+            <li><a href="#" class="nav-link" onclick="alert('Policies will be available in Phase 5/6'); return false;">My Policies</a></li>
+            <li id="adminLinkContainer" style="display: none;"><a href="admin.html" class="nav-link" style="color: var(--accent); font-weight: bold;">Admin Panel</a></li>
+            <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div style="margin-bottom: 2rem;">
+            <h1>Travel Insurance Plans</h1>
+            <p style="color: var(--text-muted);">Explore coverages, compare options, and choose the plan that suits your needs.</p>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <!-- Comparison Bar -->
+        <div class="card" id="comparisonBar" style="margin-bottom: 2rem; display: none; background-color: var(--primary); color: #ffffff;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h3 style="color: #ffffff; margin-bottom: 0.25rem;">Compare Plans</h3>
+                    <p style="color: #94a3b8; font-size: 0.9rem;" id="comparisonCount">0 of 3 plans selected for comparison</p>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-primary" id="triggerCompareBtn">Compare Now</button>
+                    <button class="btn btn-secondary" id="clearCompareBtn" style="border-color: #64748b; color: #cbd5e1;">Clear</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="card" style="margin-bottom: 2rem; padding: 1.5rem;">
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <label for="searchPlan" style="font-weight: 600; color: var(--primary-light); white-space: nowrap;">Search Plans:</label>
+                <input type="text" id="searchPlan" class="form-control" placeholder="Search plans by name or description...">
+            </div>
+        </div>
+
+        <!-- Comparison Modal / Table View -->
+        <div class="card" id="comparisonViewCard" style="margin-bottom: 3rem; display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem;">
+                <h2>Plan Comparison Table</h2>
+                <button class="btn btn-secondary" id="closeComparisonBtn" style="border: 1px solid var(--text-muted); color: var(--text-main); padding: 0.4rem 1rem;">Close Table</button>
+            </div>
+            <div class="table-responsive">
+                <table style="text-align: center;">
+                    <thead>
+                        <tr id="comparisonHeaders">
+                            <th>Feature</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparisonRows">
+                        <!-- Rows populated by Javascript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Plans Directory Grid -->
+        <div class="grid" id="plansGrid">
+            <!-- Populated dynamically -->
+            <p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">Loading active travel plans...</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Travel Shield Policy Issuance Platform. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

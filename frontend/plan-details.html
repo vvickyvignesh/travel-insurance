@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Details | Travel Shield</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/plan-details.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            ✈️ Travel<span>Shield</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+            <li><a href="plans.html" class="nav-link">Insurance Plans</a></li>
+            <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
+        </ul>
+    </nav>
+
+    <main class="container" style="max-width: 800px;">
+        <div style="margin-bottom: 2rem;">
+            <a href="plans.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Plans</a>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <div class="card" id="planDetailsCard" style="display: none;">
+            <h1 id="planName" style="color: var(--primary); margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Plan Name</h1>
+            
+            <p id="planDescription" style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">Plan Description</p>
+
+            <h3 style="margin-bottom: 1rem; color: var(--primary);">Coverage Details</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; font-size: 1.1rem;">
+                <div style="border-left: 4px solid var(--accent); padding-left: 0.75rem;">
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Total Coverage Limit</span>
+                    <strong id="detailTotalLimit" style="font-size: 1.3rem; color: var(--primary-light);">₹0</strong>
+                </div>
+                <div style="border-left: 4px solid var(--accent); padding-left: 0.75rem;">
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Medical Coverage</span>
+                    <strong id="detailMedicalLimit" style="font-size: 1.3rem; color: var(--primary-light);">₹0</strong>
+                </div>
+                <div style="border-left: 4px solid var(--accent); padding-left: 0.75rem;">
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Baggage Coverage</span>
+                    <strong id="detailBaggageLimit" style="font-size: 1.3rem; color: var(--primary-light);">₹0</strong>
+                </div>
+                <div style="border-left: 4px solid var(--accent); padding-left: 0.75rem;">
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Trip Cancellation</span>
+                    <strong id="detailCancellationLimit" style="font-size: 1.3rem; color: var(--primary-light);">₹0</strong>
+                </div>
+                <div style="border-left: 4px solid var(--accent); padding-left: 0.75rem; grid-column: span 2;">
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; display: block;">Emergency Assistance</span>
+                    <strong id="detailEmergencyAssist" style="font-size: 1.3rem; color: var(--primary-light);">Yes</strong>
+                </div>
+            </div>
+
+            <div style="background-color: #f1f5f9; padding: 1.5rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold;">Base Premium Fee</span>
+                    <h2 id="planPremium" style="font-size: 2.25rem; color: var(--primary); font-weight: 700; margin-top: 0.25rem;">₹0</h2>
+                </div>
+                <button class="btn btn-primary" id="selectPlanBtn" style="padding: 1rem 2rem; font-size: 1.1rem;">Select This Plan</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Travel Shield Policy Issuance Platform. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

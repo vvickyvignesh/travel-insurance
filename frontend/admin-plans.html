@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Plans | Travel Shield Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/admin-plans.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            ✈️ Travel<span>Shield</span> 🛡️ Admin
+        </a>
+        <ul class="nav-links">
+            <li><a href="admin.html" class="nav-link">Manage Users</a></li>
+            <li><a href="admin-plans.html" class="nav-link">Manage Plans</a></li>
+            <li><a href="dashboard.html" class="nav-link">My Profile</a></li>
+            <li><button id="logoutBtn" class="btn-nav-logout">Logout</button></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1>Manage Insurance Plans</h1>
+                <p style="color: var(--text-muted);">Create, update, activate, deactivate, or safely delete platform travel plans.</p>
+            </div>
+            <button id="toggleFormBtn" class="btn btn-primary">Add New Plan</button>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <!-- Add/Edit Form Card (Hidden by default) -->
+        <div class="card" id="planFormCard" style="margin-bottom: 2rem; display: none;">
+            <h2 id="formTitle" style="border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem;">Create New Insurance Plan</h2>
+            
+            <form id="planForm">
+                <input type="hidden" id="editPlanId">
+                
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 0;">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label for="name">Plan Name</label>
+                        <input type="text" id="name" class="form-control" required placeholder="e.g. Bronze Explorer Plan">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" class="form-control" required placeholder="e.g. Budget coverage for backpackers.">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="coverageAmount">Coverage Amount (₹)</label>
+                        <input type="number" id="coverageAmount" class="form-control" required min="0" placeholder="100000">
+                    </div>
+                    <div class="form-group">
+                        <label for="medicalCoverage">Medical Coverage (₹)</label>
+                        <input type="number" id="medicalCoverage" class="form-control" required min="0" placeholder="50000">
+                    </div>
+                    <div class="form-group">
+                        <label for="baggageCoverage">Baggage Coverage (₹)</label>
+                        <input type="number" id="baggageCoverage" class="form-control" required min="0" placeholder="25000">
+                    </div>
+                    <div class="form-group">
+                        <label for="tripCancellation">Trip Cancellation (₹)</label>
+                        <input type="number" id="tripCancellation" class="form-control" required min="0" placeholder="10000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="basePremium">Base Premium (₹)</label>
+                        <input type="number" id="basePremium" class="form-control" required min="0.01" step="0.01" placeholder="999.00">
+                    </div>
+                    
+                    <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem;">
+                        <input type="checkbox" id="emergencyAssistance" style="width: auto;" checked>
+                        <label for="emergencyAssistance" style="margin-bottom: 0; cursor: pointer;">Emergency Assistance</label>
+                    </div>
+
+                    <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem;">
+                        <input type="checkbox" id="active" style="width: auto;" checked>
+                        <label for="active" style="margin-bottom: 0; cursor: pointer;">Active / Available</label>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem; max-width: 400px;">
+                    <button type="submit" class="btn btn-primary" id="savePlanBtn" style="flex: 1;">Save Plan</button>
+                    <button type="button" id="cancelPlanFormBtn" class="btn btn-secondary" style="flex: 1; border: 2px solid var(--border); color: var(--text-main);">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Filter / Search Toolbar -->
+        <div class="card" style="margin-bottom: 2rem; padding: 1.5rem; display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+            <div style="flex: 2; display: flex; gap: 0.5rem; align-items: center; min-width: 250px;">
+                <label for="searchAdminPlan" style="font-weight: 600; color: var(--primary-light); white-space: nowrap;">Search Plans:</label>
+                <input type="text" id="searchAdminPlan" class="form-control" placeholder="Search by plan name...">
+            </div>
+            
+            <div style="flex: 1; display: flex; gap: 0.5rem; align-items: center; min-width: 200px;">
+                <label for="filterStatus" style="font-weight: 600; color: var(--primary-light); white-space: nowrap;">Status:</label>
+                <select id="filterStatus" class="form-control" style="padding: 0.5rem;">
+                    <option value="ALL">All Plans</option>
+                    <option value="ACTIVE">Active Only</option>
+                    <option value="INACTIVE">Inactive Only</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Plans table card -->
+        <div class="card">
+            <h2>Insurance Plans Directory</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Plan Name</th>
+                            <th>Total Coverage</th>
+                            <th>Medical Coverage</th>
+                            <th>Baggage Coverage</th>
+                            <th>Premium</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminPlansTableBody">
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: var(--text-muted);">Loading plans...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Travel Shield Policy Issuance Platform. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
